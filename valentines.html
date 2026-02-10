@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Will You Be My Valentine? ❤️</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      height: 100vh;
+      background: linear-gradient(135deg, #ffdde1, #ee9ca7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .card {
+      background: white;
+      padding: 40px 30px;
+      border-radius: 20px;
+      text-align: center;
+      max-width: 400px;
+      width: 90%;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+      animation: fadeIn 1.2s ease;
+    }
+
+    h1 {
+      color: #e63946;
+      margin-bottom: 20px;
+    }
+
+    p {
+      font-size: 18px;
+      color: #333;
+      line-height: 1.6;
+      margin-bottom: 30px;
+    }
+
+    .buttons {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    button {
+      padding: 12px 22px;
+      border: none;
+      border-radius: 30px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .yes {
+      background: #e63946;
+      color: white;
+      transform: scale(1);
+    }
+
+    .yes.grow {
+      transform: scale(1.2);
+    }
+
+    .yes:hover {
+      background: #d62839;
+      transform: scale(1.05);
+    }
+
+    .no {
+      background: #f1f1f1;
+      color: #555;
+      position: absolute;
+      transform: scale(1);
+    }
+
+    .no:hover {
+      position: absolute;
+      top: calc(50% + (Math.random() * 200 - 100) * 1px);
+      left: calc(50% + (Math.random() * 200 - 100) * 1px);
+    }
+
+    .hearts {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .heart {
+      position: absolute;
+      bottom: -20px;
+      color: #e63946;
+      font-size: 20px;
+      animation: floatUp 6s linear infinite;
+      opacity: 0.7;
+    }
+
+    @keyframes floatUp {
+      0% {
+        transform: translateY(0) scale(1);
+        opacity: 0.8;
+      }
+      100% {
+        transform: translateY(-110vh) scale(1.4);
+        opacity: 0;
+      }
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <h1>Hey ❤️</h1>
+    <p>
+      I don’t need a special day to love you,<br>
+      but I’d love this one to be ours ❤️<br><br>
+      <strong>Will you be my Valentine?</strong>
+    </p>
+    <div class="buttons" style="position:relative;height:100px;">
+      <button class="yes" id="yesBtn" onclick="sayYes()" style="position:absolute;left:20px;top:20px;">Yes ❤️</button>
+      <button class="no" id="noBtn" style="position:absolute;left:200px;top:20px;">No 😅</button>
+    </div>
+  </div>
+
+  <div class="hearts" id="hearts"></div>
+
+  <script>
+    const heartsContainer = document.getElementById('hearts');
+    const noBtn = document.getElementById('noBtn');
+    const yesBtn = document.getElementById('yesBtn');
+
+    let noScale = 1;
+
+    function sayYes() {
+      confettiBurst();
+      setTimeout(function () {
+        document.body.innerHTML = '\
+          <div style="display:flex;align-items:center;justify-content:center;height:100vh;background:linear-gradient(135deg,#ffdde1,#ee9ca7);text-align:center;">\
+            <div style="background:white;padding:40px;border-radius:20px;box-shadow:0 20px 40px rgba(0,0,0,0.15);animation:fadeIn 1s ease;">\
+              <h1 style="color:#e63946;">Yayyy! 💖🎉</h1>\
+              <p style="font-size:20px;color:#333;margin-top:15px;">You just made me smile like an idiot 😄<br>Happy Valentine’s Day ❤️</p>\
+              <p style="margin-top:10px;">(Screenshot this 😌)</p>\
+            </div>\
+          </div>';
+      }, 500);
+    }
+
+    function confettiBurst() {
+      for (var i = 0; i < 40; i++) {
+        var c = document.createElement('div');
+        c.innerText = Math.random() > 0.5 ? '💖' : '🎉';
+        c.style.position = 'fixed';
+        c.style.left = Math.random() * 100 + 'vw';
+        c.style.top = '100vh';
+        c.style.fontSize = 20 + Math.random() * 20 + 'px';
+        c.style.animation = 'floatUp 2.5s ease-out forwards';
+        document.body.appendChild(c);
+        setTimeout(function () { c.remove(); }, 3000);
+      }
+    }
+
+    function showTease() {
+      var tease = document.createElement('div');
+      tease.innerText = 'Nice try 😌';
+      tease.style.position = 'absolute';
+      tease.style.bottom = '10px';
+      tease.style.left = '50%';
+      tease.style.transform = 'translateX(-50%)';
+      tease.style.fontSize = '14px';
+      tease.style.color = '#888';
+      tease.style.animation = 'fadeIn 0.4s ease';
+      document.querySelector('.card').appendChild(tease);
+      setTimeout(function () { tease.remove(); }, 800);
+    }
+
+    noBtn.addEventListener('mouseenter', function () {
+      var card = document.querySelector('.card');
+      var cardRect = card.getBoundingClientRect();
+      var btnRect = noBtn.getBoundingClientRect();
+
+      var maxX = cardRect.width - btnRect.width;
+      var maxY = cardRect.height - btnRect.height;
+
+      var randomX = Math.random() * maxX;
+      var randomY = Math.random() * maxY;
+
+      noScale = Math.max(0.3, noScale - 0.15);
+      noBtn.style.transform = 'scale(' + noScale + ')';
+      noBtn.style.left = randomX + 'px';
+      noBtn.style.top = randomY + 'px';
+
+      yesBtn.classList.add('grow');
+      setTimeout(function () { yesBtn.classList.remove('grow'); }, 300);
+
+      showTease();
+    });
+
+    setInterval(function () {
+      var heart = document.createElement('div');
+      heart.className = 'heart';
+      heart.innerText = '❤️';
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.animationDuration = 4 + Math.random() * 3 + 's';
+      heartsContainer.appendChild(heart);
+      setTimeout(function () { heart.remove(); }, 7000);
+    }, 500);
+  </script>
+
+</body>
+</html>
